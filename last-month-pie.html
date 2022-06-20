@@ -1,0 +1,67 @@
+
+    <head>
+      <meta charset="UTF-8">
+    </head>
+    <body>
+      <div>
+        <canvas id="myChart"></canvas>
+        <button type="button" class="btn btn-default btn-sm float" onclick="window.location.reload()">
+          <span>&#8634;</span>
+        </button>
+      </div>
+      <style>
+        .float {
+          position: fixed;
+          top: 5px;
+          left: 5px;
+          background-color: rgba(0,0,0,0.25);
+          padding: 5px 8px;
+          color: white;
+          border-radius: 6px;
+          border-style: none;
+          cursor: pointer;
+          font-size: 1.2em;
+        }
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+          const data = [{"category":"مصاريف متغيرة","amount":18469.83},{"category":"لوازم بيت","amount":4000},{"category":"ندى","amount":3500},{"category":"إيجار","amount":3000},{"category":"بنزين","amount":960},{"category":"انترنت","amount":357.14},{"category":"فودافون","amount":110}];
+          const myChart = new Chart(document.getElementById("myChart"), {
+            type: "doughnut",
+            data: {
+              labels: data.map(d => d.category),
+              datasets: [{
+                label: "",
+                backgroundColor: [
+                  "rgb(235, 83, 83)",
+                  "rgb(249, 217, 35)",
+                  "rgb(54, 174, 124)",
+                  "rgb(6, 154, 142)",
+                  "rgb(24, 116, 152)",
+                  ],
+                borderColor: "rgb(255, 255, 255)",
+                data: data.map(d => d.amount),
+              }]
+            },
+            options: {
+              plugins: {
+                legend: {
+                  position: "left",
+                  rtl: true
+                },
+                title: {
+                  display: true,
+                  position: "top",
+                  text: ["تصنيفات الشهر المنصرم"]
+                }
+              },
+              tooltips: {
+                rtl: true
+              },
+              aspectRatio: 1.75,
+              cutout: "62%",
+            }
+          });
+      </script>
+    </body>
+

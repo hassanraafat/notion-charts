@@ -1,0 +1,132 @@
+
+    <head>
+      <meta charset="UTF-8">
+    </head>
+    <body>
+      <div>
+        <canvas id="myChart"></canvas>
+        <button type="button" class="btn btn-default btn-sm float" onclick="window.location.reload()">
+          <span>&#8634;</span>
+        </button>
+      </div>
+      <style>
+        .float {
+          position: fixed;
+          top: 5px;
+          left: 5px;
+          background-color: rgba(0,0,0,0.25);
+          padding: 5px 8px;
+          color: white;
+          border-radius: 6px;
+          border-style: none;
+          cursor: pointer;
+          font-size: 1.2em;
+        }
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+      function linearRegression(data, xLabel, yLabel) {
+        const x = data.map((element, ind) => ind);
+        const y = data.map((element) => element[yLabel]);
+
+        const sumX = x.reduce((prev, curr) => prev + curr, 0);
+        const avgX = sumX / x.length;
+
+        const xDifferencesToAverage = x.map((value) => avgX - value);
+        const xDifferencesToAverageSquared = xDifferencesToAverage.map(
+          (value) => value ** 2
+        );
+
+        const SSxx = xDifferencesToAverageSquared.reduce(
+          (prev, curr) => prev + curr,
+          0
+        );
+
+        const sumY = y.reduce((prev, curr) => prev + curr, 0);
+        const avgY = sumY / y.length;
+
+        const yDifferencesToAverage = y.map((value) => avgY - value);
+
+        const xAndYDifferencesMultiplied = xDifferencesToAverage.map(
+          (curr, index) => curr * yDifferencesToAverage[index]
+        );
+
+          const SSxy = xAndYDifferencesMultiplied.reduce(
+            (prev, curr) => prev + curr,
+            0
+          );
+
+        const slope = SSxy / SSxx;
+        const intercept = avgY - slope * avgX;
+
+        const func = (f) => intercept + slope * f;
+        return [...Array(12)].map((e, i) => i < 5 - 1? NaN: func(i));
+      }
+          const data = [{"month":"يناير ٢٢","amount":5356,"demand":10000},{"month":"فبراير ٢٢","amount":3479,"demand":10000},{"month":"مارس ٢٢","amount":-8020,"demand":10000},{"month":"أبريل ٢٢","amount":19966,"demand":10000},{"month":"مايو ٢٢","amount":15819,"demand":10000},{"month":"يونيه ٢٢","amount":15845,"demand":10000},{"month":"يوليو ٢٢","amount":0,"demand":10000},{"month":"أغسطس ٢٢","amount":0,"demand":10000},{"month":"سبتمبر ٢٢","amount":0,"demand":10000},{"month":"أكتوبر ٢٢","amount":0,"demand":10000},{"month":"نوفمبر ٢٢","amount":0,"demand":10000},{"month":"ديسمبر ٢٢","amount":0,"demand":10000}];
+          const myChart = new Chart(document.getElementById("myChart"), {
+            type: "line",
+            data: {
+              labels: data.map(d => d.month).reverse(),
+              datasets: [{
+                label: "saving",
+                borderColor: "rgb(57, 138, 185)",
+                backgroundColor: "rgba(0, 180, 216, 0.3)",
+                data: data.reverse().map((d, i) => i > 5 + 1? d.amount: NaN),
+                tension: 0.2,
+                fill: true,
+                borderWidth: 2,
+              }, {
+                label: "demand",
+                borderColor: "rgb(151, 219, 174)",
+                data: data.map(d => d.demand),
+                pointRadius: 0,
+                borderWidth: 1,
+                tooltips: { enabled: false },
+                hover: { mode: null },
+              }, {
+                label: "regression",
+                borderColor: "rgba(0, 180, 216, 0.3)",
+                data: linearRegression(data.map((d, i) => i < 5? d: {...d, amount: d.demand}), "month", "amount").reverse(),
+                borderDash: [12, 8],
+                borderWidth: 2,
+                pointRadius: 0,
+              }, {
+                label: "zero",
+                backgroundColor: "rgba(255, 195, 195, 0.4)",
+                data: data.map(() => 0),
+                pointRadius: 0,
+                borderWidth: 1,
+                fill: "start",
+                tooltips: { enabled: false },
+                hover: { mode: null },
+              }]
+            },
+            options: {
+              plugins: {
+                legend: {
+                  display: false,
+                  position: "left",
+                  rtl: true
+                },
+                title: {
+                  display: true,
+                  position: "top",
+                  text: ["مدخرات العام"]
+                }
+              },
+              tooltips: {
+                rtl: true
+              },
+              aspectRatio: 3,
+              scales: {
+                 yAxis: {
+                  type: "linear",
+                  display: true,
+                  position: "right"
+                 }
+               }
+            }
+          });
+      </script>
+    </body>
+
