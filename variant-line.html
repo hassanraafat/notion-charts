@@ -27,37 +27,40 @@
       <script>
           const monthNames = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
                                            "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
-          const data =[{month:6,amount:NaN},{"month":5,"amount":8499},{"month":4,"amount":18469.83},{"month":3,"amount":8844.51},{"month":2,"amount":16337.58},{"month":1,"amount":11806.42}];
+          const data =[{month:6,amount:NaN},{"month":5,"amount":8199},{"month":4,"amount":18469.83},{"month":3,"amount":8844.51},{"month":2,"amount":16337.58},{"month":1,"amount":11806.42}];
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "line",
             data: {
               labels: data.map(d => monthNames[d.month % monthNames.length]),
               datasets: [{
                 label: "spent",
-                borderColor: "rgb(57, 138, 185)",
-                backgroundColor: "rgba(0, 180, 216, 0.3)",
-                data: data.map(d => d.amount),
+                borderColor: "#D01110",
+                backgroundColor: "rgba(208, 17, 16, 0.6)",
+                data: data.map(d => d.amount - 8000),
                 tension: 0.2,
                 fill: true,
                 borderWidth: 2,
-                order: 1
-              }, {
+                order: 2,
+                min: 10000,
+              },{
+               label: "limit",
+               borderColor: "#7EC8E3",
+               backgroundColor: "#7EC8E3",
+               data: data.map(d => 8000),
+               fill: true,
+               pointRadius: 0,
+               borderWidth: 1,
+               tooltips: { enabled: false },
+               hover: { mode: null },
+               order: 0,
+             }, {
                 label: "average",
-                borderColor: "rgb(246, 137, 137)",
-                data: data.map(d => d.amount).reverse().map((d, i, arr) => arr.slice(0, i + 1).reduce((a, b) => a + b)/(i + 1)).reverse(),
+                borderColor: "#FEDA15",
+                data: data.map(d => d.amount).reverse().map((d, i, arr) => arr.slice(0, i + 1).reduce((a, b) => a + b)/(i + 1) - d).reverse(),
                 borderDash: [12, 6],
                 borderWidth: 2,
                 pointRadius: 0,
-                order: 0
-              }, {
-                label: "limit",
-                borderColor: "rgb(235, 83, 83)",
-                data: data.map(d => 8000),
-                pointRadius: 0,
-                borderWidth: 1,
-                tooltips: { enabled: false },
-                hover: { mode: null },
-                order: 2
+                order: 3,
               }]
             },
             options: {
@@ -79,10 +82,20 @@
               aspectRatio: 3,
               scales: {
                  yAxis: {
+                  stacked: "single",
                   type: "linear",
                   display: true,
                   position: "right",
-                  beginAtZero: true,
+                  min: 0,
+                  gridLines: {
+                    display: true,
+                    z: 99,
+                  }
+                 },
+                 xAxis: {
+                  gridLines: {
+                    z: 99,
+                  }
                  }
                }
             }
