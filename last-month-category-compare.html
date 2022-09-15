@@ -33,7 +33,6 @@
             ind > -1? (mergedData[ind].current = { ...el }) : mergedData.push({ current: { ...el }, last: { amount: 0, category: el.category } });
           });
           mergedData.sort((a, b) => a.current.amount - b.current.amount);
-          console.log(mergedData);
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "bar",
             data: {
