@@ -25,8 +25,8 @@
       </style>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
-          const lastMonthData = [{"category":"ندى","amount":3000},{"category":"مصاريف متغيرة","amount":4039.5600000000004},{"category":"لوازم بيت","amount":4000},{"category":"فودافون","amount":240},{"category":"بنزين","amount":700},{"category":"انترنت","amount":1304.85},{"category":"إيجار","amount":3350}];
-          const currentMonthData = [{"category":"ندى","amount":3000},{"category":"مصاريف متغيرة","amount":11049.43},{"category":"لوازم بيت","amount":4000},{"category":"فودافون","amount":227},{"category":"بنزين","amount":760},{"category":"انترنت","amount":843.95},{"category":"إيجار","amount":3350}];
+          const lastMonthData = [{"category":"ندى","amount":3000},{"category":"مصاريف متغيرة","amount":11049.43},{"category":"لوازم بيت","amount":4000},{"category":"فودافون","amount":227},{"category":"بنزين","amount":760},{"category":"انترنت","amount":843.95},{"category":"إيجار","amount":3350}];
+          const currentMonthData = [{"category":"مصاريف متغيرة","amount":-3737.6900000000023}];
           const mergedData = lastMonthData.map(el => ({ last: el }));
           currentMonthData.forEach(el => {
             const ind = mergedData.findIndex(d => d.last.category === el.category);
