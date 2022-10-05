@@ -32,7 +32,7 @@
             const ind = mergedData.findIndex(d => d.last.category === el.category);
             ind > -1? (mergedData[ind].current = { ...el }) : mergedData.push({ current: { ...el }, last: { amount: 0, category: el.category } });
           });
-mergedData.map(el => el.current? el: { ...el, current: { amount: 0, category: el.last.category } });
+mergedData = mergedData.map(el => el.current? el: { ...el, current: { amount: 0, category: el.last.category } });
           mergedData.sort((a, b) => a.current.amount - b.current.amount);
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "bar",
