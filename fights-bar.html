@@ -67,8 +67,9 @@
           const data = [{"date":"2022-10-27","count":1},{"date":"2022-10-29","count":1}];
           const mappedData = {};
           data.forEach(e => mappedData[e.date] = mappedData[e.date]? mappedData[e.date] + 1 : 1);
+          const today = (new Date()).toISOString().slice(0,10);
           const startDate = Object.keys(mappedData)[0];
-          const endDate = Object.keys(mappedData)[Object.keys(mappedData).length - 1];
+          const endDate = [today, Object.keys(mappedData)[Object.keys(mappedData).length - 1]].sort().reverse()[0];
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "bar",
             data: {
@@ -82,6 +83,7 @@
                 borderWidth: 0,
                 tooltips: { enabled: false },
                 hover: { mode: null },
+                maxBarThickness: 10
               }]
             },
             options: {
@@ -107,6 +109,7 @@
                   display: true,
                   position: "right",
                   beginAtZero: true,
+                  max: 3,
                   ticks: {
                     stepSize: 1
                  }
