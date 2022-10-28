@@ -64,7 +64,7 @@
       }
 
           const getDaysArray = function(s,e) {for(var a=[],d=new Date(s);d<=new Date(e);d.setDate(d.getDate()+1)){ a.push(new Date(d));}return a;};
-          const data = [{"date":"2022-10-27","count":1},{"date":"2022-10-29","count":1}];
+          const data = [{"date":"2022-10-27","count":1}];
           const mappedData = {};
           data.forEach(e => mappedData[e.date] = mappedData[e.date]? mappedData[e.date] + 1 : 1);
           const today = (new Date()).toISOString().slice(0,10);
