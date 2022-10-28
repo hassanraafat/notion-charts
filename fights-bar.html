@@ -62,41 +62,24 @@
         const func = (f) => intercept + slope * f;
         return [...Array(12)].map((e, i) => i < 10 - 1? NaN: func(i));
       }
-          const data = [{"month":"يناير ٢٢","amount":5356,"demand":10000},{"month":"فبراير ٢٢","amount":3479,"demand":10000},{"month":"مارس ٢٢","amount":-8020,"demand":10000},{"month":"أبريل ٢٢","amount":19966,"demand":10000},{"month":"مايو ٢٢","amount":15819,"demand":10000},{"month":"يونيه ٢٢","amount":23756.800000000003,"demand":10000},{"month":"يوليو ٢٢","amount":32531.60000000002,"demand":20000},{"month":"أغسطس ٢٢","amount":33584.8,"demand":20000},{"month":"سبتمبر ٢٢","amount":29158.799999999977,"demand":20000},{"month":"أكتوبر ٢٢","amount":54310,"demand":20000},{"month":"نوفمبر ٢٢","amount":0,"demand":20000},{"month":"ديسمبر ٢٢","amount":0,"demand":20000}];
+
+          const getDaysArray = function(s,e) {for(var a=[],d=new Date(s);d<=new Date(e);d.setDate(d.getDate()+1)){ a.push(new Date(d));}return a;};
+          const data = [{"date":"2022-10-27","count":1},{"date":"2022-10-29","count":1}];
+          const mappedData = {};
+          data.forEach(e => mappedData[e.date] = mappedData[e.date]? mappedData[e.date] + 1 : 1);
+          const startDate = Object.keys(mappedData)[0];
+          const endDate = Object.keys(mappedData)[Object.keys(mappedData).length - 1];
           const myChart = new Chart(document.getElementById("myChart"), {
-            type: "line",
+            type: "bar",
             data: {
-              labels: data.map(d => d.month).reverse(),
+              labels: getDaysArray(startDate, endDate).map(e => e.toLocaleString("ar-EG", {month: "long", day: "numeric"})).reverse(),
               datasets: [{
-                label: "saving",
-                borderColor: "rgb(57, 138, 185)",
-                backgroundColor: "rgba(0, 180, 216, 0.3)",
-                data: data.map((d, i) => i < 10? d.amount: NaN).reverse(),
-                tension: 0.2,
-                fill: true,
-                borderWidth: 2,
-              }, {
-                label: "demand",
-                borderColor: "rgb(151, 219, 174)",
-                data: data.map(d => d.demand).reverse(),
-                pointRadius: 0,
-                borderWidth: 1,
-                tooltips: { enabled: false },
-                hover: { mode: null },
-              }, {
-                label: "regression",
-                borderColor: "rgba(0, 180, 216, 0.3)",
-                data: linearRegression(data.map((d, i, arr) => i < 10? d: {...d, amount: d.demand}), "month", "amount").reverse(),
-                borderDash: [12, 8],
-                borderWidth: 2,
-                pointRadius: 0,
-              }, {
-                label: "zero",
-                backgroundColor: "rgba(255, 195, 195, 0.4)",
-                data: data.map(() => 0),
-                pointRadius: 0,
-                borderWidth: 1,
-                fill: "start",
+                label: "fights",
+                borderColor: "rgb(255, 50, 50)",
+                backgroundColor: "rgb(255, 50, 50)",
+                data: getDaysArray(startDate, endDate).map(e => mappedData[e.toISOString().slice(0,10)] || 0).reverse(),
+                pointRadius: 1,
+                borderWidth: 0,
                 tooltips: { enabled: false },
                 hover: { mode: null },
               }]
@@ -111,7 +94,7 @@
                 title: {
                   display: true,
                   position: "top",
-                  text: ["مدخرات العام"]
+                  text: ["الصراعات مؤخرًا"]
                 }
               },
               tooltips: {
@@ -122,9 +105,13 @@
                  yAxis: {
                   type: "linear",
                   display: true,
-                  position: "right"
+                  position: "right",
+                  beginAtZero: true,
+                  ticks: {
+                    stepSize: 1
                  }
                }
+              }
             }
           });
       </script>
