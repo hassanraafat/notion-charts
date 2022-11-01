@@ -62,7 +62,7 @@
         const func = (f) => intercept + slope * f;
         return [...Array(12)].map((e, i) => i < 11 - 1? NaN: func(i));
       }
-          const data = [{"month":"يناير ٢٢","amount":5356,"demand":10000},{"month":"فبراير ٢٢","amount":3479,"demand":10000},{"month":"مارس ٢٢","amount":-8020,"demand":10000},{"month":"أبريل ٢٢","amount":19966,"demand":10000},{"month":"مايو ٢٢","amount":15819,"demand":10000},{"month":"يونيه ٢٢","amount":23756.800000000003,"demand":10000},{"month":"يوليو ٢٢","amount":32531.60000000002,"demand":20000},{"month":"أغسطس ٢٢","amount":33584.8,"demand":20000},{"month":"سبتمبر ٢٢","amount":29158.799999999977,"demand":20000},{"month":"أكتوبر ٢٢","amount":59229,"demand":20000},{"month":"نوفمبر ٢٢","amount":57664,"demand":30000},{"month":"ديسمبر ٢٢","amount":0,"demand":30000}];
+          const data = [{"month":"يناير ٢٢","amount":5356,"demand":null},{"month":"فبراير ٢٢","amount":3479,"demand":null},{"month":"مارس ٢٢","amount":-8020,"demand":null},{"month":"أبريل ٢٢","amount":19966,"demand":null},{"month":"مايو ٢٢","amount":15819,"demand":null},{"month":"يونيه ٢٢","amount":23756.800000000003,"demand":null},{"month":"يوليو ٢٢","amount":32531.60000000002,"demand":null},{"month":"أغسطس ٢٢","amount":33584.8,"demand":null},{"month":"سبتمبر ٢٢","amount":29158.799999999977,"demand":null},{"month":"أكتوبر ٢٢","amount":57018,"demand":null},{"month":"نوفمبر ٢٢","amount":59875,"demand":null},{"month":"ديسمبر ٢٢","amount":0,"demand":null}];
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "line",
             data: {
