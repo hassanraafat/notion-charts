@@ -25,8 +25,8 @@
       </style>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
-          const lastMonthData = [{"category":"ندى","amount":3000},{"category":"مصاريف متغيرة","amount":11049.43},{"category":"لوازم بيت","amount":4000},{"category":"فودافون","amount":227},{"category":"بنزين","amount":760},{"category":"انترنت","amount":843.95},{"category":"إيجار","amount":3350}];
-          const currentMonthData = [{"category":"ندى","amount":3000},{"category":"مصاريف متغيرة","amount":7586.18},{"category":"لوازم بيت","amount":4000},{"category":"فودافون","amount":333},{"category":"بنزين","amount":505},{"category":"انترنت","amount":1528.63},{"category":"إيجار","amount":3350}];
+          const lastMonthData = [{"category":"ندى","amount":3000},{"category":"مصاريف متغيرة","amount":9600.18},{"category":"لوازم بيت","amount":4000},{"category":"فودافون","amount":393},{"category":"بنزين","amount":505},{"category":"انترنت","amount":1665.4299999999998},{"category":"إيجار","amount":3350}];
+          const currentMonthData = [];
           let mergedData = lastMonthData.map(el => ({ last: el }));
           currentMonthData.forEach(el => {
             const ind = mergedData.findIndex(d => d.last.category === el.category);
