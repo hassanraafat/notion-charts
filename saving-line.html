@@ -62,7 +62,10 @@
         const func = (f) => intercept + slope * f;
         return [...Array(12)].map((e, i) => i < 11 - 1? NaN: func(i));
       }
-          const data = [{"month":"يناير ٢٢","amount":5356,"demand":16320,"salary":27200},{"month":"فبراير ٢٢","amount":3479,"demand":16320,"salary":27200},{"month":"مارس ٢٢","amount":-8020,"demand":16320,"salary":27200},{"month":"أبريل ٢٢","amount":19966,"demand":16320,"salary":27200},{"month":"مايو ٢٢","amount":15819,"demand":27750,"salary":46250},{"month":"يونيه ٢٢","amount":23756.800000000003,"demand":28140.000000000004,"salary":46900.00000000001},{"month":"يوليو ٢٢","amount":32531.60000000002,"demand":28335,"salary":47225},{"month":"أغسطس ٢٢","amount":33584.8,"demand":28680,"salary":47800},{"month":"سبتمبر ٢٢","amount":29158.799999999977,"demand":29400.000000000004,"salary":49000},{"month":"أكتوبر ٢٢","amount":57018,"demand":35925,"salary":59875},{"month":"نوفمبر ٢٢","amount":30332.5,"demand":36750,"salary":61250},{"month":"ديسمبر ٢٢","amount":0,"demand":35925,"salary":59875}];
+          const data = [{"month":"يناير ٢٢","amount":5356,"demand":16320,"salary":27200},{"month":"فبراير ٢٢","amount":3479,"demand":16320,"salary":27200},{"month":"مارس ٢٢","amount":-8020,"demand":16320,"salary":27200},{"month":"أبريل ٢٢","amount":19966,"demand":16320,"salary":27200},{"month":"مايو ٢٢","amount":15819,"demand":27750,"salary":46250},{"month":"يونيه ٢٢","amount":23756.800000000003,"demand":28140.000000000004,"salary":46900.00000000001},{"month":"يوليو ٢٢","amount":32531.60000000002,"demand":28335,"salary":47225},{"month":"أغسطس ٢٢","amount":33584.8,"demand":28680,"salary":47800},{"month":"سبتمبر ٢٢","amount":29158.799999999977,"demand":29400.000000000004,"salary":49000},{"month":"أكتوبر ٢٢","amount":57018,"demand":35925,"salary":59875},{"month":"نوفمبر ٢٢","amount":30332.5,"demand":36750,"salary":61250},{"month":"ديسمبر ٢٢","amount":0,"demand":35925,"salary":59875}].map(d => {
+				 d.percent = Math.round(10000  * (d.amount/d.salary || d.demand/d.salary))/10000; 
+				 return d;
+			 });
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "line",
             data: {
@@ -86,7 +89,8 @@
               }, {
                 label: "regression",
                 borderColor: "rgba(0, 180, 216, 0.3)",
-                data: linearRegression(data.map((d, i, arr) => i < 11? d: {...d, amount: d.demand}), "month", "amount").reverse(),
+                // data: linearRegression(data.map((d, i, arr) => i < 11? d: {...d, amount: d.demand}), "month", "amount").reverse(),
+                data: linearRegression(data, "month", "percent").map((d, i) => d * data[i].salary).reverse(),
                 borderDash: [12, 8],
                 borderWidth: 2,
                 pointRadius: 0,
