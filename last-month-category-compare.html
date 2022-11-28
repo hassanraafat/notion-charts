@@ -25,8 +25,8 @@
       </style>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
-          const lastMonthData = [{"category":"ندى","amount":3000},{"category":"مصاريف متغيرة","amount":8285.18},{"category":"لوازم بيت","amount":4000},{"category":"فودافون","amount":453},{"category":"بنزين","amount":760},{"category":"انترنت","amount":1665.4299999999998},{"category":"إيجار","amount":3350}];
-          const currentMonthData = [{"category":"ندى","amount":3500},{"category":"مصاريف متغيرة","amount":12343.150000000001},{"category":"لوازم بيت","amount":12170},{"category":"فودافون","amount":40},{"category":"بنزين","amount":800},{"category":"انترنت","amount":357.15},{"category":"إيجار","amount":3350}];
+          const lastMonthData = [{"category":"ندى","amount":3000},{"category":"مصاريف متغيرة","amount":9617.18},{"category":"لوازم بيت","amount":4000},{"category":"فودافون","amount":453},{"category":"بنزين","amount":760},{"category":"انترنت","amount":1039.3},{"category":"إيجار","amount":3350}];
+          const currentMonthData = [{"category":"ندى","amount":3500},{"category":"مصاريف متغيرة","amount":10269.150000000001},{"category":"لوازم بيت","amount":12170},{"category":"فودافون","amount":100},{"category":"بنزين","amount":800},{"category":"انترنت","amount":357.15},{"category":"إيجار","amount":3350}];
           let mergedData = lastMonthData.map(el => ({ last: el }));
           currentMonthData.forEach(el => {
             const ind = mergedData.findIndex(d => d.last.category === el.category);
