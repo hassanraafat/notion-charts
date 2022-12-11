@@ -25,9 +25,55 @@
       </style>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
-      function linearRegression(data, xLabel, yLabel) {
-        const x = data.map((element, ind) => ind);
-        const y = data.map((element) => element[yLabel]);
+      function movingAverage(y, k) {
+        const res = [...Array(y.length)].map(e => NaN);
+        const margin = Math.floor(k/2);
+        for(let i=0; i<res.length-k+1; i++) {
+          res[i+margin] = y.slice(i, i+k).reduce((a, b) => a + b, 0) / k;
+        }
+        return (k % 2 == 0)
+        ? res.map((d, i) => isNaN(d) || isNaN(res[i+1]) ? NaN: (res[i+1] + d) / 2)
+        : res;
+      }
+      function irregularity(y, avgs) {
+        return [...avgs.map((avg, i) => avg === NaN? avg: y[i]/avg)];
+      }
+      function seasonality(avgs, k) {
+        const seasonAvg = [...Array(k)].map(d => 1);
+        for(let i=0; i<k; i++) {
+          const season = avgs.filter((avg, j) => j%k===i && !isNaN(avg));
+          seasonAvg[i] = !season.length? 1 : season.reduce((a, b) => a + b, 0) / season.length;
+        }
+        let res = [];
+        while(res.length + seasonAvg.length <= avgs.length) {
+          res = res.concat(seasonAvg);
+        }
+        return res.concat(seasonAvg.slice(0, avgs.length%k));
+      }
+      function deseasonlize(y, seas) {
+        return [...y.map((d, i) => d/seas[i])];
+      }
+      function forecast(y) {
+        y = y.map(d => d < 0? 0: d);
+        const k = 3;
+        const ma = movingAverage(y, k);
+        const irr = irregularity(y, ma);
+        const seas = seasonality(irr, k);
+        const deseas = deseasonlize(y, seas);
+        const trend = linearRegression(deseas);
+        const res = trend.map((d, i) => d * seas[i]);
+
+        console.log("y: ", y);
+        console.log("ma: ", ma);
+        console.log("irr: ", irr);
+        console.log("seas: ", seas);
+        console.log("deseas: ", deseas);
+        console.log("trend: ", trend);
+        console.log("res: ", res);
+        return res;
+      }
+      function linearRegression(y) {
+        const x = [...Array(y.length)].map((d, i) => i);
 
         const sumX = x.reduce((prev, curr) => prev + curr, 0);
         const avgX = sumX / x.length;
@@ -60,9 +106,9 @@
         const intercept = avgY - slope * avgX;
 
         const func = (f) => intercept + slope * f;
-        return [...Array(12)].map((e, i) => i < 12 - 1? NaN: func(i));
+        return [...Array(y.length)].map((e, i) => func(i));
       }
-          const data = [{"month":"يناير ٢٢","amount":5356,"demand":16320,"salary":27200},{"month":"فبراير ٢٢","amount":3479,"demand":16320,"salary":27200},{"month":"مارس ٢٢","amount":-8020,"demand":16320,"salary":27200},{"month":"أبريل ٢٢","amount":19966,"demand":16320,"salary":27200},{"month":"مايو ٢٢","amount":15819,"demand":27750,"salary":46250},{"month":"يونيه ٢٢","amount":23756.800000000003,"demand":28140.000000000004,"salary":46900.00000000001},{"month":"يوليو ٢٢","amount":32531.60000000002,"demand":28335,"salary":47225},{"month":"أغسطس ٢٢","amount":33584.8,"demand":28680,"salary":47800},{"month":"سبتمبر ٢٢","amount":29158.799999999977,"demand":29400.000000000004,"salary":49000},{"month":"أكتوبر ٢٢","amount":57018,"demand":35925,"salary":59875},{"month":"نوفمبر ٢٢","amount":29958.5,"demand":36750,"salary":61250},{"month":"ديسمبر ٢٢","amount":42778,"demand":36750,"salary":61250}].map(d => {
+          const data = [{"month":"يناير ٢٢","amount":5356,"demand":16320,"salary":27200,"isUpcoming":false},{"month":"فبراير ٢٢","amount":3479,"demand":16320,"salary":27200,"isUpcoming":false},{"month":"مارس ٢٢","amount":-8020,"demand":16320,"salary":27200,"isUpcoming":false},{"month":"أبريل ٢٢","amount":19966,"demand":16320,"salary":27200,"isUpcoming":false},{"month":"مايو ٢٢","amount":15819,"demand":27750,"salary":46250,"isUpcoming":false},{"month":"يونيه ٢٢","amount":23756.800000000003,"demand":28140.000000000004,"salary":46900.00000000001,"isUpcoming":false},{"month":"يوليو ٢٢","amount":32531.60000000002,"demand":28335,"salary":47225,"isUpcoming":false},{"month":"أغسطس ٢٢","amount":33584.8,"demand":28680,"salary":47800,"isUpcoming":false},{"month":"سبتمبر ٢٢","amount":29158.799999999977,"demand":29400.000000000004,"salary":49000,"isUpcoming":false},{"month":"أكتوبر ٢٢","amount":57018,"demand":35925,"salary":59875,"isUpcoming":false},{"month":"نوفمبر ٢٢","amount":29958.5,"demand":36750,"salary":61250,"isUpcoming":false},{"month":"ديسمبر ٢٢","amount":41361.5,"demand":36840,"salary":61400,"isUpcoming":false},{"month":"يناير ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"فبراير ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"مارس ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"أبريل ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"مايو ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"يونيه ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true}].map(d => {
 				 d.percent = Math.round(10000  * (d.amount/d.salary || d.demand/d.salary))/10000; 
 				 return d;
 			 });
@@ -87,17 +133,17 @@
                 tooltips: { enabled: false },
                 hover: { mode: null },
               }, {
-                label: "regression",
-                borderColor: "rgba(0, 180, 216, 0.3)",
-                // data: linearRegression(data.map((d, i, arr) => i < 12? d: {...d, amount: d.demand}), "month", "amount").reverse(),
-                data: linearRegression(data, "month", "percent").map((d, i) => d * data[i].salary).reverse(),
-                borderDash: [12, 8],
-                borderWidth: 2,
-                pointRadius: 0,
-              }, {
                 label: "salary",
                 borderColor: "rgba(255, 71, 202, 1)",
                 data: data.map(d => d.salary).reverse(),
+                pointRadius: 0,
+                borderWidth: 1,
+                tooltips: { enabled: false },
+                hover: { mode: null },
+              }, {
+                label: "forecast",
+                borderColor: "rgba(245, 221, 144, 0.75)",
+                data: forecast(data.map(d => d.percent)).map((d, i) => d * data[i].salary).reverse(),
                 pointRadius: 0,
                 borderWidth: 1,
                 tooltips: { enabled: false },
