@@ -117,7 +117,7 @@
 				 d.percent = Math.round(10000  * (d.amount/d.salary || d.demand/d.salary))/10000; 
 				 return d;
 			 });
-			    const seasons = [{"percent":2.351075,"a":0.1206,"b":0.0331},{"percent":1.3153000000000001,"a":0.1206,"b":0.0331},{"percent":0.8342,"a":0.1206,"b":0.0331}];
+			    const seasons = [{"percent":2.8205999999999998,"a":0.1206,"b":0.022},{"percent":1.6327500000000001,"a":0.1206,"b":0.022},{"percent":1.1378249999999999,"a":0.1206,"b":0.022}];
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "line",
             data: {
@@ -130,22 +130,31 @@
                 tension: 0.2,
                 fill: true,
                 borderWidth: 2,
+                order: 1,
               }, {
                 label: "demand",
-                borderColor: "rgb(151, 219, 174)",
+                borderColor: "rgba(0, 230, 216, 0.3)",
                 data: data.map(d => d.demand).reverse(),
                 pointRadius: 0,
                 borderWidth: 1,
                 tooltips: { enabled: false },
                 hover: { mode: null },
+                backgroundColor: "rgba(255, 255, 255, 1)",
+                fill: true,
+                stack: "percent",
+                order: 3,
               }, {
                 label: "salary",
-                borderColor: "rgba(255, 71, 202, 1)",
-                data: data.map(d => d.salary).reverse(),
+                borderColor: "rgba(0, 230, 216, 0.3)",
+                data: data.map(d => d.salary - d.demand).reverse(),
                 pointRadius: 0,
                 borderWidth: 1,
                 tooltips: { enabled: false },
                 hover: { mode: null },
+                backgroundColor: "rgba(0, 230, 216, 0.1)",
+                fill: true,
+                stack: "percent",
+                order: 3,
               }, {
                 label: "forecast",
                 hidden: true,
@@ -155,15 +164,18 @@
                 borderWidth: 1,
                 tooltips: { enabled: false },
                 hover: { mode: null },
+                order: 2
               }, {
                  label: "forecastNotion",
-                 borderColor: "rgba(245, 221, 144, 0.75)",
+                 borderColor: "rgba(245, 221, 144, 0.6)",
                  data: data.map((d, i) => forecastNotion(i)).map((d, i) => d * data[i].salary).reverse(),
                  pointRadius: 0,
                  borderWidth: 2,
-                 borderDash: [2, 3],
+                 tension: 0.2,
+                 borderDash: [6, 4],
                  tooltips: { enabled: false },
                  hover: { mode: null },
+                 order: 2
                }]
             },
             options: {
@@ -190,7 +202,17 @@
                   position: "right",
                   min: 0,
                   ticks: {
-                    count: 10
+                    stepSize: 10000
+                  },
+                  grid: {
+                    z: 1,
+                    color: "rgba(0, 0, 0, 0.1)"
+                  }
+                 },
+                 x: {
+                  grid: {
+                    z: 1,
+                    color: "rgba(0, 0, 0, 0.01)"
                   }
                  }
                }
