@@ -72,6 +72,11 @@
         console.log("res: ", res);
         return res;
       }
+      function forecastNotion(x) {
+        const season = seasons[x % seasons.length];
+        console.log(season.percent * (season.a + x * season.b));
+        return season.percent * (season.a + x * season.b);
+      }
       function linearRegression(y) {
         const x = [...Array(y.length)].map((d, i) => i);
 
@@ -108,10 +113,11 @@
         const func = (f) => intercept + slope * f;
         return [...Array(y.length)].map((e, i) => func(i));
       }
-          const data = [{"month":"يناير ٢٢","amount":5356,"demand":16320,"salary":27200,"isUpcoming":false},{"month":"فبراير ٢٢","amount":3479,"demand":16320,"salary":27200,"isUpcoming":false},{"month":"مارس ٢٢","amount":-8020,"demand":16320,"salary":27200,"isUpcoming":false},{"month":"أبريل ٢٢","amount":19966,"demand":16320,"salary":27200,"isUpcoming":false},{"month":"مايو ٢٢","amount":15819,"demand":27750,"salary":46250,"isUpcoming":false},{"month":"يونيه ٢٢","amount":23756.800000000003,"demand":28140.000000000004,"salary":46900.00000000001,"isUpcoming":false},{"month":"يوليو ٢٢","amount":32531.60000000002,"demand":28335,"salary":47225,"isUpcoming":false},{"month":"أغسطس ٢٢","amount":33584.8,"demand":28680,"salary":47800,"isUpcoming":false},{"month":"سبتمبر ٢٢","amount":29158.799999999977,"demand":29400.000000000004,"salary":49000,"isUpcoming":false},{"month":"أكتوبر ٢٢","amount":57018,"demand":35925,"salary":59875,"isUpcoming":false},{"month":"نوفمبر ٢٢","amount":29958.5,"demand":36750,"salary":61250,"isUpcoming":false},{"month":"ديسمبر ٢٢","amount":47643.5,"demand":36840,"salary":61400,"isUpcoming":false},{"month":"يناير ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"فبراير ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"مارس ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"أبريل ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"مايو ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true},{"month":"يونيه ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true}].map(d => {
+          const data = [{"month":"يناير ٢٢","amount":5356,"demand":16320,"salary":27200,"isUpcoming":false,"forecast":null},{"month":"فبراير ٢٢","amount":3479,"demand":16320,"salary":27200,"isUpcoming":false,"forecast":null},{"month":"مارس ٢٢","amount":-8020,"demand":16320,"salary":27200,"isUpcoming":false,"forecast":null},{"month":"أبريل ٢٢","amount":19966,"demand":16320,"salary":27200,"isUpcoming":false,"forecast":null},{"month":"مايو ٢٢","amount":15819,"demand":27750,"salary":46250,"isUpcoming":false,"forecast":null},{"month":"يونيه ٢٢","amount":23756.800000000003,"demand":28140.000000000004,"salary":46900.00000000001,"isUpcoming":false,"forecast":null},{"month":"يوليو ٢٢","amount":32531.60000000002,"demand":28335,"salary":47225,"isUpcoming":false,"forecast":null},{"month":"أغسطس ٢٢","amount":33584.8,"demand":28680,"salary":47800,"isUpcoming":false,"forecast":null},{"month":"سبتمبر ٢٢","amount":29158.799999999977,"demand":29400.000000000004,"salary":49000,"isUpcoming":false,"forecast":null},{"month":"أكتوبر ٢٢","amount":57018,"demand":35925,"salary":59875,"isUpcoming":false,"forecast":null},{"month":"نوفمبر ٢٢","amount":29958.5,"demand":36750,"salary":61250,"isUpcoming":false,"forecast":null},{"month":"ديسمبر ٢٢","amount":47643.5,"demand":36840,"salary":61400,"isUpcoming":false,"forecast":null},{"month":"يناير ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true,"forecast":null},{"month":"فبراير ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true,"forecast":null},{"month":"مارس ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true,"forecast":null},{"month":"أبريل ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true,"forecast":null},{"month":"مايو ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true,"forecast":null},{"month":"يونيه ٢٣","amount":0,"demand":35925,"salary":59875,"isUpcoming":true,"forecast":null}].map(d => {
 				 d.percent = Math.round(10000  * (d.amount/d.salary || d.demand/d.salary))/10000; 
 				 return d;
 			 });
+			    const seasons = [{"percent":2.351075,"a":0.1206,"b":0.0331},{"percent":1.3153000000000001,"a":0.1206,"b":0.0331},{"percent":0.8342,"a":0.1206,"b":0.0331}];
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "line",
             data: {
@@ -142,13 +148,23 @@
                 hover: { mode: null },
               }, {
                 label: "forecast",
+                hidden: true,
                 borderColor: "rgba(245, 221, 144, 0.75)",
                 data: forecast(data.map(d => d.percent)).map((d, i) => d * data[i].salary).reverse(),
                 pointRadius: 0,
                 borderWidth: 1,
                 tooltips: { enabled: false },
                 hover: { mode: null },
-              }]
+              }, {
+                 label: "forecastNotion",
+                 borderColor: "rgba(245, 221, 144, 0.75)",
+                 data: data.map((d, i) => forecastNotion(i)).map((d, i) => d * data[i].salary).reverse(),
+                 pointRadius: 0,
+                 borderWidth: 2,
+                 borderDash: [2, 3],
+                 tooltips: { enabled: false },
+                 hover: { mode: null },
+               }]
             },
             options: {
               plugins: {
@@ -168,7 +184,7 @@
               },
               aspectRatio: 3,
               scales: {
-                 yAxis: {
+                 y: {
                   type: "linear",
                   display: true,
                   position: "right",
