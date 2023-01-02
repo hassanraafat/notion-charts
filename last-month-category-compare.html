@@ -45,14 +45,14 @@ mergedData = mergedData.map(el => el.current? el: { ...el, current: { amount: 0,
                 borderColor: "rgb(201, 203, 207)",
                 data: mergedData.map(d => d.last.amount),
                 barPercentage: 1.0,
-                barThickness: 50
+                categoryPercentage: 0.5,
               }, {
                  label: "الشهر الحالي",
                  backgroundColor: "rgba(255, 99, 132, 0.8)",
                  borderColor: "rgb(255, 99, 132)",
                  data: mergedData.map(d => d.current.amount),
                 barPercentage: 1.0,
-                barThickness: 50
+                categoryPercentage: 0.5,
                }]
             },
             options: {
