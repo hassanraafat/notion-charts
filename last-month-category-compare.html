@@ -44,11 +44,15 @@ mergedData = mergedData.map(el => el.current? el: { ...el, current: { amount: 0,
                 backgroundColor: "rgba(201, 203, 207, 0.8)",
                 borderColor: "rgb(201, 203, 207)",
                 data: mergedData.map(d => d.last.amount),
+                barPercentage: 1.0,
+                barThickness: 50
               }, {
                  label: "الشهر الحالي",
                  backgroundColor: "rgba(255, 99, 132, 0.8)",
                  borderColor: "rgb(255, 99, 132)",
                  data: mergedData.map(d => d.current.amount),
+                barPercentage: 1.0,
+                barThickness: 50
                }]
             },
             options: {
@@ -67,12 +71,26 @@ mergedData = mergedData.map(el => el.current? el: { ...el, current: { amount: 0,
               },
               aspectRatio: 3,
               scales: {
-                 yAxis: {
-                  type: "linear",
-                  display: true,
-                  position: "right"
-                 }
+               y: {
+                type: "linear",
+                display: true,
+                position: "right",
+                min: 0,
+                ticks: {
+                  stepSize: 1000
+                },
+                grid: {
+                  z: 1,
+                  color: "rgba(0, 0, 0, 0.1)"
+                }
+               },
+               x: {
+                grid: {
+                  z: 1,
+                  color: "rgba(0, 0, 0, 0.01)"
+                }
                }
+             }
             }
           });
       </script>
