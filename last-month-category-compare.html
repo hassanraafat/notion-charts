@@ -26,7 +26,7 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
           const lastMonthData = [{"category":"ندى","amount":3500},{"category":"مصاريف متغيرة","amount":8398.72},{"category":"لوازم بيت","amount":5075.75},{"category":"فودافون","amount":189},{"category":"بنزين","amount":700},{"category":"انترنت","amount":571.42},{"category":"إيجار","amount":3350}];
-          const currentMonthData = [{"category":"ندى","amount":3715},{"category":"مصاريف متغيرة","amount":6992.64},{"category":"لوازم بيت","amount":6500},{"category":"بنزين","amount":250},{"category":"انترنت","amount":148.19},{"category":"إيجار","amount":3350}];
+          const currentMonthData = [{"category":"ندى","amount":3715},{"category":"مصاريف متغيرة","amount":6872.09},{"category":"لوازم بيت","amount":6500},{"category":"بنزين","amount":250},{"category":"انترنت","amount":148.19},{"category":"إيجار","amount":3350}];
           let mergedData = lastMonthData.map(el => ({ last: el }));
           currentMonthData.forEach(el => {
             const ind = mergedData.findIndex(d => d.last.category === el.category);
