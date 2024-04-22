@@ -24,16 +24,18 @@
         }
       </style>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+	   <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/locale/ar-EG/cdn.min.js"></script>
       <script>
-          const data = [{"date":null,"amount":155950}];
+          const data = [{"date":"2024-04-07","amount":2670},{"date":"2024-03-29","amount":1880},{"date":"2024-03-21","amount":2130},{"date":"2024-03-17","amount":805},{"date":"2024-03-09","amount":2160},{"date":"2024-03-02","amount":1905},{"date":"2024-02-24","amount":1000},{"date":"2024-02-23","amount":141900},{"date":"2024-02-19","amount":1500}];
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "bar",
             data: {
               datasets: [{
                  label: "المصروفات",
-                 backgroundColor: "rgba(255, 99, 132, 0.8)",
-                 borderColor: "rgb(255, 99, 132)",
+                 backgroundColor: "#f31260",
                  data: data,
+					 borderRadius: 6,
                  barPercentage: 1.0,
                  categoryPercentage: 0.5,
              }]
@@ -57,27 +59,18 @@
                 rtl: true
               },
               aspectRatio: 3,
-              scales: {
-               y: {
-                type: "linear",
-                display: true,
-                position: "right",
-                min: 0,
-                ticks: {
-                  stepSize: 1000
-                },
-                grid: {
-                  z: 1,
-                  color: "rgba(0, 0, 0, 0.1)"
-                }
-               },
-               x: {
-                grid: {
-                  z: 1,
-                  color: "rgba(0, 0, 0, 0.01)"
-                }
-               }
-             }
+				 scales: {
+				 	x: { 
+						type: "time", 
+						reverse: true, 
+                		adapters: {
+       					date: {
+            					locale: dateFns.locale.arEG
+        					}
+    					}
+ 					},
+					y: { position: "right" }
+				 }
             }
           });
       </script>
