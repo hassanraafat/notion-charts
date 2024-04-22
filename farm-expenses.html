@@ -1,0 +1,85 @@
+
+    <head>
+      <meta charset="UTF-8">
+    </head>
+    <body>
+      <div>
+        <canvas id="myChart"></canvas>
+        <button type="button" class="btn btn-default btn-sm float" onclick="window.location.reload()">
+          <span>&#8634;</span>
+        </button>
+      </div>
+      <style>
+        .float {
+          position: fixed;
+          top: 5px;
+          left: 5px;
+          background-color: rgba(0,0,0,0.25);
+          padding: 5px 8px;
+          color: white;
+          border-radius: 6px;
+          border-style: none;
+          cursor: pointer;
+          font-size: 1.2em;
+        }
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+          const data = [{"date":null,"amount":155950}];
+          const myChart = new Chart(document.getElementById("myChart"), {
+            type: "bar",
+            data: {
+              datasets: [{
+                 label: "المصروفات",
+                 backgroundColor: "rgba(255, 99, 132, 0.8)",
+                 borderColor: "rgb(255, 99, 132)",
+                 data: data,
+                 barPercentage: 1.0,
+                 categoryPercentage: 0.5,
+             }]
+            },
+            options: {
+    			 parsing: {
+     			   xAxisKey: date,
+      			   yAxisKey: amount
+    			 },
+              plugins: {
+                legend: {
+                  display: false
+                },
+                title: {
+                  display: true,
+                  position: "top",
+                  text: ["المصروفات"]
+                }
+              },
+              tooltips: {
+                rtl: true
+              },
+              aspectRatio: 3,
+              scales: {
+               y: {
+                type: "linear",
+                display: true,
+                position: "right",
+                min: 0,
+                ticks: {
+                  stepSize: 1000
+                },
+                grid: {
+                  z: 1,
+                  color: "rgba(0, 0, 0, 0.1)"
+                }
+               },
+               x: {
+                grid: {
+                  z: 1,
+                  color: "rgba(0, 0, 0, 0.01)"
+                }
+               }
+             }
+            }
+          });
+      </script>
+    </body>
+
