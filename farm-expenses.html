@@ -35,9 +35,8 @@
                  label: "المصروفات",
                  backgroundColor: "#f31260",
                  data: data,
-					 borderRadius: 6,
+					 borderRadius: 8,
                  barPercentage: 1.0,
-                 categoryPercentage: 0.5,
              }]
             },
             options: {
@@ -58,7 +57,7 @@
               tooltips: {
                 rtl: true
               },
-              aspectRatio: 3,
+              aspectRatio: 1,
 				 scales: {
 				 	x: { 
 						type: "time", 
@@ -69,7 +68,7 @@
         					}
     					}
  					},
-					y: { position: "right" }
+					y: { type: "logarithmic", position: "right" }
 				 }
             }
           });
