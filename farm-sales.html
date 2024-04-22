@@ -1,0 +1,77 @@
+
+    <head>
+      <meta charset="UTF-8">
+    </head>
+    <body>
+      <div>
+        <canvas id="myChart"></canvas>
+        <button type="button" class="btn btn-default btn-sm float" onclick="window.location.reload()">
+          <span>&#8634;</span>
+        </button>
+      </div>
+      <style>
+        .float {
+          position: fixed;
+          top: 5px;
+          left: 5px;
+          background-color: rgba(0,0,0,0.25);
+          padding: 5px 8px;
+          color: white;
+          border-radius: 6px;
+          border-style: none;
+          cursor: pointer;
+          font-size: 1.2em;
+        }
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+	   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+	   <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/locale/ar-EG/cdn.min.js"></script>
+      <script>
+          const data = [{"date":"2024-04-04","amount":5400}];
+          const myChart = new Chart(document.getElementById("myChart"), {
+            type: "bar",
+            data: {
+              datasets: [{
+                 label: "المبيعات",
+                 backgroundColor: "#006fee",
+                 data: data,
+					 borderRadius: 8,
+                 barPercentage: 1.0,
+             }]
+            },
+            options: {
+    			 parsing: {
+     			   xAxisKey: "date",
+      			   yAxisKey: "amount"
+    			 },
+              plugins: {
+                legend: {
+                  display: false
+                },
+                title: {
+                  display: true,
+                  position: "top",
+                  text: ["المبيعات"]
+                }
+              },
+              tooltips: {
+                rtl: true
+              },
+              aspectRatio: 1.5,
+				 scales: {
+				 	x: { 
+						type: "time", 
+						reverse: true, 
+                		adapters: {
+       					date: {
+            					locale: dateFns.locale.arEG
+        					}
+    					}
+ 					},
+					y: { position: "right" }
+				 }
+            }
+          });
+      </script>
+    </body>
+
