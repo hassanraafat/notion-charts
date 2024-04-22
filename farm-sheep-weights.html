@@ -1,0 +1,75 @@
+
+    <head>
+      <meta charset="UTF-8">
+    </head>
+    <body>
+      <div>
+        <canvas id="myChart"></canvas>
+        <button type="button" class="btn btn-default btn-sm float" onclick="window.location.reload()">
+          <span>&#8634;</span>
+        </button>
+      </div>
+      <style>
+        .float {
+          position: fixed;
+          top: 5px;
+          left: 5px;
+          background-color: rgba(0,0,0,0.25);
+          padding: 5px 8px;
+          color: white;
+          border-radius: 6px;
+          border-style: none;
+          cursor: pointer;
+          font-size: 1.2em;
+        }
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+	   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+	   <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/locale/ar-EG/cdn.min.js"></script>
+      <script>
+          const data = [{"id":"17","data":[{"date":"2024-04-07","weight":21.6},{"date":"2024-03-24","weight":19.35},{"date":"2024-03-08","weight":16.5}]},{"id":"19","data":[{"date":"2024-04-07","weight":15.7},{"date":"2024-03-24","weight":13.4},{"date":"2024-03-08","weight":11}]},{"id":"20","data":[{"date":"2024-04-07","weight":22.75},{"date":"2024-03-24","weight":20.6},{"date":"2024-03-08","weight":15.6}]},{"id":"21","data":[{"date":"2024-04-07","weight":25.5},{"date":"2024-03-24","weight":22.5},{"date":"2024-03-08","weight":20}]},{"id":"22","data":[{"date":"2024-04-07","weight":25.25},{"date":"2024-03-24","weight":22.15},{"date":"2024-03-08","weight":17.5}]},{"id":"23","data":[{"date":"2024-04-07","weight":20.5},{"date":"2024-03-24","weight":17.95},{"date":"2024-03-08","weight":14}]},{"id":"29","data":[{"date":"2024-04-07","weight":27.8},{"date":"2024-03-24","weight":24.35},{"date":"2024-03-08","weight":20}]},{"id":"30","data":[{"date":"2024-04-07","weight":26.2},{"date":"2024-03-24","weight":24.7},{"date":"2024-03-08","weight":20}]},{"id":"31","data":[{"date":"2024-04-07","weight":32.7},{"date":"2024-03-24","weight":29.3},{"date":"2024-03-08","weight":25.5}]},{"id":"32","data":[{"date":"2024-04-07","weight":22.4},{"date":"2024-03-24","weight":19},{"date":"2024-03-08","weight":15.5}]},{"id":"33","data":[{"date":"2024-04-07","weight":23.5},{"date":"2024-03-24","weight":21},{"date":"2024-03-08","weight":18.5}]},{"id":"34","data":[{"date":"2024-04-07","weight":32.25},{"date":"2024-03-24","weight":28.65},{"date":"2024-03-08","weight":22.6}]},{"id":"35","data":[{"date":"2024-04-07","weight":20.2},{"date":"2024-03-24","weight":19.5},{"date":"2024-03-08","weight":16}]},{"id":"36","data":[{"date":"2024-04-07","weight":29},{"date":"2024-03-24","weight":26.1},{"date":"2024-03-08","weight":20.85}]},{"id":"37","data":[{"date":"2024-04-07","weight":28.5},{"date":"2024-03-24","weight":25.5},{"date":"2024-03-08","weight":21}]},{"id":"39","data":[{"date":"2024-04-07","weight":28},{"date":"2024-03-24","weight":24.3},{"date":"2024-03-08","weight":20}]},{"id":"40","data":[{"date":"2024-04-07","weight":19},{"date":"2024-03-24","weight":17.75},{"date":"2024-03-08","weight":16}]}];
+          const myChart = new Chart(document.getElementById("myChart"), {
+            type: "line",
+            data: {
+              datasets: data.map(dataset => ({
+                 label: dataset.id,
+                 // backgroundColor: "#006fee",
+                 data: dataset.data,
+             }))
+            },
+            options: {
+    			 parsing: {
+     			   xAxisKey: "date",
+      			   yAxisKey: "weight"
+    			 },
+              plugins: {
+                legend: {
+                  display: false
+                },
+                title: {
+                  display: true,
+                  position: "top",
+                  text: ["أوزان الخراف"]
+                }
+              },
+              tooltips: {
+                rtl: true
+              },
+              aspectRatio: 1.5,
+				 scales: {
+				 	x: { 
+						type: "time", 
+						reverse: true, 
+                		adapters: {
+       					date: {
+            					locale: dateFns.locale.arEG
+        					}
+    					}
+ 					},
+					y: { position: "right" }
+				 }
+            }
+          });
+      </script>
+    </body>
+
