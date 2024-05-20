@@ -24,10 +24,15 @@
         }
       </style>
       <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 	   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 	   <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/locale/ar-EG/cdn.min.js"></script>
       <script>
-          const data = [{"date":"2024-05-19","amount":10000},{"date":"2024-05-18","amount":10004},{"date":"2024-05-14","amount":17874},{"date":"2024-04-04","amount":5400}];
+          const data = [{"date":"2024-05-01","amount":37878},{"date":"2024-04-01","amount":5400}];
+          const currencyFormat = new Intl.NumberFormat(undefined, {
+             style: "currency",
+             currency: "EGP",
+          }).format;
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "bar",
             data: {
@@ -52,7 +57,30 @@
                   display: true,
                   position: "top",
                   text: ["المبيعات"]
-                }
+                },
+    annotation: {
+      annotations: {
+        avg: {
+          type: "line",
+          yMin: data.reduce((sum, item) => sum + item.amount, 0) / data.length,
+          yMax: data.reduce((sum, item) => sum + item.amount, 0) / data.length,
+          borderColor: "#ffb876",
+          borderWidth: 3,
+          content: [currencyFormat(data.reduce((sum, item) => sum + item.amount, 0) / data.length)],
+        },
+        avgText: {
+          type: "label",
+          xValue: data[0].date,
+          yValue: 3000 + data.reduce((sum, item) => sum + item.amount, 0) / data.length,
+          content: [currencyFormat(data.reduce((sum, item) => sum + item.amount, 0) / data.length)],
+			color: "#ffb876",
+          font: {
+            size: 18,
+			  weight: "bold"
+          }
+        }
+      }
+    }
               },
               tooltips: {
                 rtl: true
@@ -66,9 +94,17 @@
        					date: {
             					locale: dateFns.locale.arEG
         					}
-    					}
+    					},
+						time: {
+							unit: "month",
+							round: "month",
+						}
  					},
-					y: { position: "right" }
+					y: { position: "right", ticks: { format: {
+                style: "currency",
+                currency: "EGP",
+              } }
+}
 				 }
             }
           });
