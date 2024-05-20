@@ -71,7 +71,7 @@
         avgText: {
           type: "label",
           xValue: data[0].date,
-          yValue: 1000 + data.filter((_, idx) => idx < data.length - 1).reduce((sum, item) => sum + item.amount, 0) / (data.length - 1),
+          yValue: 3000 + data.filter((_, idx) => idx < data.length - 1).reduce((sum, item) => sum + item.amount, 0) / (data.length - 1),
           content: [currencyFormat(data.filter((_, idx) => idx < data.length - 1).reduce((sum, item) => sum + item.amount, 0) / (data.length - 1))],
 			color: "#ffb876",
           font: {
