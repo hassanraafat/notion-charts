@@ -42,7 +42,7 @@
 			const datesAcc = {};
 			dataSales.forEach(item => datesAcc[item.date] = item.amount + (datesAcc[item.date] == undefined? 0: datesAcc[item.date]));
 			dataExpenses.forEach(item => datesAcc[item.date] = item.amount + (datesAcc[item.date] == undefined? 0: datesAcc[item.date]));
-			const data = Object.entries(datesAcc).map(([k, v]) => ({ date: k, amount: v })).toSorted((a, b) => b.date < a.date);
+			const data = Object.keys(datesAcc).toSorted().map((k) => ({ date: k, amount: datesAcc[k] }));
 			for(let i = 1; i < data.length; i++) {
 				data[i].amount += data[i-1].amount;
 			}
