@@ -35,7 +35,7 @@
         			return seen.hasOwnProperty(k) ? false : (seen[k] = true);
     			}).reverse()
 			}
-          const dataSales = [{"date":"2024-06-01","amount":116965},{"date":"2024-05-01","amount":37878},{"date":"2024-04-01","amount":5400}];
+          const dataSales = [{"date":"2024-06-01","amount":146065},{"date":"2024-05-01","amount":37878},{"date":"2024-04-01","amount":5400}];
           const dataExpenses = [{"date":"2024-06-01","amount":115341.57},{"date":"2024-05-01","amount":9320},{"date":"2024-04-01","amount":14015.4},{"date":"2024-03-01","amount":8880},{"date":"2024-02-01","amount":144400}].map(e => ({ ...e, amount: -1 * e.amount }));
 			// const data = uniqueBy([...dataSales, ...dataExpenses].toSorted((a, b) => a.date < b.date), item => item.date);
 			// const data = [...dataSales, ...dataExpenses].toSorted((a, b) => a.date < b.date);
