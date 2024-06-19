@@ -28,7 +28,7 @@
 	   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 	   <script src="https://cdn.jsdelivr.net/npm/date-fns@3.6.0/locale/ar-EG/cdn.min.js"></script>
       <script>
-          const data = [{"date":"2024-06-01","amount":115341.57},{"date":"2024-05-01","amount":9320},{"date":"2024-04-01","amount":14015.4},{"date":"2024-03-01","amount":8880},{"date":"2024-02-01","amount":144400}];
+          const data = [{"date":"2024-06-01","category":"خدمة","amount":1000},{"date":"2024-06-01","category":"مرعى","amount":3010},{"date":"2024-06-01","category":"أصل","amount":111331.57},{"date":"2024-05-01","category":"خدمة","amount":1000},{"date":"2024-05-01","category":"مرعى","amount":8320},{"date":"2024-04-01","category":"معدات","amount":610.4},{"date":"2024-04-01","category":"بيطرة","amount":1375},{"date":"2024-04-01","category":"خدمة","amount":1000},{"date":"2024-04-01","category":"مرعى","amount":11030},{"date":"2024-03-01","category":"معدات","amount":50},{"date":"2024-03-01","category":"بيطرة","amount":1080},{"date":"2024-03-01","category":"خدمة","amount":300},{"date":"2024-03-01","category":"مرعى","amount":7450},{"date":"2024-02-01","category":"معدات","amount":11650},{"date":"2024-02-01","category":"مرعى","amount":12250},{"date":"2024-02-01","category":"أصل","amount":120500}];
           const currencyFormat = new Intl.NumberFormat(undefined, {
              style: "currency",
              currency: "EGP",
@@ -37,14 +37,46 @@
             type: "bar",
             data: {
               datasets: [{
-                 label: "المصروفات",
-                 backgroundColor: "#f31260",
-                 data: data,
+                 label: "خدمة",
+                 backgroundColor: "rgb(255, 45, 85)",
+                 data: data.filter(el => el.category === "خدمة"),
 					 borderRadius: 8,
                  barPercentage: 1.0,
+					borderWidth: 1,
+             },{
+                 label: "مرعى",
+                 backgroundColor: "rgb(255, 59, 48)",
+                 data: data.filter(el => el.category === "مرعى"),
+					 borderRadius: 8,
+                 barPercentage: 1.0,
+					borderWidth: 1,
+             },{
+                 label: "أصل",
+                 backgroundColor: "rgb(255, 149, 0)",
+                 data: data.filter(el => el.category === "أصل"),
+					 borderRadius: 8,
+                 barPercentage: 1.0,
+					borderWidth: 1,
+             },{
+                 label: "بيطرة",
+                 backgroundColor: "rgb(255, 204, 0)",
+                 data: data.filter(el => el.category === "بيطرة"),
+					 borderRadius: 8,
+                 barPercentage: 1.0,
+					borderWidth: 1,
+             },{
+                 label: "معدات",
+                 backgroundColor: "rgb(142, 142, 147)",
+                 data: data.filter(el => el.category === "معدات"),
+					 borderRadius: 8,
+                 barPercentage: 1.0,
+					borderWidth: 1,
              }]
             },
             options: {
+        		interaction: {
+            		mode: "x"
+        		},
     			 parsing: {
      			   xAxisKey: "date",
       			   yAxisKey: "amount"
@@ -88,6 +120,7 @@
               aspectRatio: 1.5,
 				 scales: {
 				 	x: { 
+						stacked: true,
 						type: "time", 
 						reverse: true, 
                 		adapters: {
@@ -100,7 +133,7 @@
 							round: "month",
 						}
  					},
-					y: { type: "logarithmic", position: "right", ticks: { format: {
+					y: { stacked: true, type: "logarithmic", position: "right", ticks: { format: {
                   style: "currency",
                   currency: "EGP",
                 } } }
