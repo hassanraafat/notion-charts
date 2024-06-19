@@ -33,6 +33,9 @@
              style: "currency",
              currency: "EGP",
           }).format;
+			const datesSums = {};
+			data.filter(el => el.category != "أصل").forEach((el) => (datesSums[el.date] = (datesSums[el.date] ?? 0) + el.amount));
+			const nonAssetData = Object.entries(datesSums).map(([k, v]) => ({ date: k, amount: v }));
           const myChart = new Chart(document.getElementById("myChart"), {
             type: "bar",
             data: {
@@ -94,17 +97,17 @@
       annotations: {
         avg: {
           type: "line",
-          yMin: data.filter((_, idx) => idx < data.length - 1).reduce((sum, item) => sum + item.amount, 0) / (data.length - 1),
-          yMax: data.filter((_, idx) => idx < data.length - 1).reduce((sum, item) => sum + item.amount, 0) / (data.length - 1),
+          yMin: nonAssetData.reduce((sum, item) => sum + item.amount, 0) / nonAssetData.length,
+          yMax: nonAssetData.reduce((sum, item) => sum + item.amount, 0) / nonAssetData.length,
           borderColor: "#ffb876",
           borderWidth: 3,
-          content: [currencyFormat(data.filter((_, idx) => idx < data.length - 1).reduce((sum, item) => sum + item.amount, 0) / data.length)],
+          content: [currencyFormat(nonAssetData.reduce((sum, item) => sum + item.amount, 0) / nonAssetData.length)],
         },
         avgText: {
           type: "label",
           xValue: data[0].date,
-          yValue: 3000 + data.filter((_, idx) => idx < data.length - 1).reduce((sum, item) => sum + item.amount, 0) / (data.length - 1),
-          content: [currencyFormat(data.filter((_, idx) => idx < data.length - 1).reduce((sum, item) => sum + item.amount, 0) / (data.length - 1))],
+          yValue: 3000 + nonAssetData.reduce((sum, item) => sum + item.amount, 0) / nonAssetData.length,
+          content: [currencyFormat(nonAssetData.reduce((sum, item) => sum + item.amount, 0) / nonAssetData.length)],
 			color: "#ffb876",
           font: {
             size: 18,
