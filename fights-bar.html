@@ -60,7 +60,7 @@
         const intercept = avgY - slope * avgX;
 
         const func = (f) => intercept + slope * f;
-        return [...Array(12)].map((e, i) => i < 7 - 1? NaN: func(i));
+        return [...Array(12)].map((e, i) => i < 8 - 1? NaN: func(i));
       }
 
           const getDaysArray = function(s,e) {for(var a=[],d=new Date(s);d<=new Date(e);d.setDate(d.getDate()+1)){ a.push(new Date(d));}return a;};
