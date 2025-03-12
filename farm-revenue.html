@@ -67,6 +67,11 @@
              }]
             },
             options: {
+       		 layout: {
+           	 	padding: {
+            	    	left: 70
+           	 	}
+      			 },
     			 parsing: {
      			   xAxisKey: "date",
       			   yAxisKey: "amount"
@@ -81,6 +86,7 @@
                   text: ["المبيعات"]
                 },
 					annotation: {
+						clip: false,
       					annotations: {
         					withAssetsLabel: {
           					type: "label",
